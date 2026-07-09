@@ -301,11 +301,7 @@ footer {
 
     <button class="menu">☰</button>
 </header>
-
-<div class="delivery-banner">
-    🚚 ነጻ ማመላለሻ (Free Delivery) — ማንኛውንም እቃ ሲያዙ ያሉበት ድረስ ያለምንም ተጨማሪ ክፍያ በነጻ እናደርሳለን!
-</div>
-
+ 
 <section class="hero">
     <div class="hero-text">
         <h1>Modern Furniture For Your Dream Home</h1>
@@ -314,6 +310,8 @@ footer {
     </div>
 </section>
 
+<div class="delivery-banner">
+    🚚 ነጻ ማመላለሻ (Free Delivery) — ማንኛውንም እቃ ሲያዙ ያሉበት ድረስ
 <section id="process" class="process-section">
     <h2>የአሰራር ሂደታችን</h2>
     <p class="process-subtitle">ለየት ያሉ የቤት ዕቃዎችን (Custom Works) በጥራት የምናመርትበት 4 ደረጃዎች</p>

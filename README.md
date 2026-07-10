@@ -1437,24 +1437,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const comment = document.getElementById('reviewerComment').value.trim();
         const rating = parseInt(ratingInput.value);
 
-        if(rating === 0) {
-            alert("እባክዎ መጀመሪያ ከኮከቦቹ ላይ ደረጃ (Rating) ይምረጡ!");
-            return;
-        }
 
-        // Add new review to the top of the array
-        localComments.unshift({ name: name, rating: rating, text: comment });
-        
-        // Save back to local storage
-        localStorage.setItem('markFurnitureReviews', JSON.stringify(localComments));
-        
-        // Re-render list and reset form
-        renderComments();
-        feedbackForm.reset();
-        stars.forEach(s => s.classList.remove('selected'));
-        ratingInput.value = "0";
-    });
-});
-</script>
 </body>
 </html>

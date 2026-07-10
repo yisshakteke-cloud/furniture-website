@@ -1161,7 +1161,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. LocalStorage to save and load reviews dynamically
     let localComments = JSON.parse(localStorage.getItem('markFurnitureReviews')) || [
         { name: "አስቴር ካሳ", rating: 5, text: "በጣም ድንቅ ስራ ነው! ያዘዝነውን የሳሎን ሶፋ በሰዓቱ አምጥተውልናል። ፊኒሺንጉ እጅግ ያምራል።" },
-        { name: "ዳዊት በቀለ", rating: 5, text: "ጥራቱ በጣም አስተማማኝ ነው። ያዘዝኩትን አልጋ መጀመሪያ በ3D እንዳሳዩኝ አድርገው ነው የሰሩት።" }
+        { name: "ዳዊት በቀለ", rating: 5, text: "ጥራቱ በጣም አስተማማኝ ነው። ያዘዝኩትን አልጋ መጀመሪያ በ3D እንዳሳዩኝ አድርገው ነው የሰሩት።"
     ];
 
     function renderComments() {
@@ -1343,71 +1343,6 @@ document.addEventListener('DOMContentLoaded', () => {
     margin-bottom: 15px;
     border-left: 5px solid #0b7a4b;
     box-shadow: 0 2px 8px rgba(0,0,0,0.01);
-}
-.single-comment .comment-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-}
-.single-comment .comment-name {
-    font-weight: bold;
-    color: #064d32;
-    font-size: 15.5px;
-}
-.single-comment .comment-stars {
-    color: #ffc107;
-    font-size: 16px;
-    letter-spacing: 2px;
-}
-.single-comment .comment-text {
-    font-size: 14.5px;
-    color: #444;
-    line-height: 1.6;
-}
-</style>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const stars = document.querySelectorAll('.star');
-    const ratingInput = document.getElementById('selectedRating');
-    const feedbackForm = document.getElementById('feedbackForm');
-    const commentsDisplayList = document.getElementById('commentsDisplayList');
-
-    // 1. Star Rating Interactive Logic
-    stars.forEach(star => {
-        star.addEventListener('click', () => {
-            const value = star.getAttribute('data-value');
-            ratingInput.value = value;
-            
-            stars.forEach(s => {
-                if(parseInt(s.getAttribute('data-value')) <= parseInt(value)) {
-                    s.classList.add('selected');
-                } else {
-                    s.classList.remove('selected');
-                }
-            });
-        });
-
-        star.addEventListener('mouseover', () => {
-            const value = star.getAttribute('data-value');
-            stars.forEach(s => {
-                if(parseInt(s.getAttribute('data-value')) <= parseInt(value)) {
-                    s.classList.add('hovered');
-                } else {
-                    s.classList.remove('hovered');
-                }
-            });
-        });
-
-        star.addEventListener('mouseout', () => {
-            stars.forEach(s => s.classList.remove('hovered'));
-        });
-    });
-
-    // 2. LocalStorage to save and load reviews dynamically
-    let localComments = JSON.parse(localStorage.getItem('markFurnitureReviews')) || [
-        
 
 
 </body>

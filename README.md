@@ -1134,46 +1134,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ratingInput.value = value;
             
             stars.forEach(s => {
-                if(parseInt(s.getAttribute('data-value')) <= parseInt(value)) {
-                    s.classList.add('selected');
-                } else {
-                    s.classList.remove('selected');
-                }
-            });
-        });
-
-        star.addEventListener('mouseover', () => {
-            const value = star.getAttribute('data-value');
-            stars.forEach(s => {
-                if(parseInt(s.getAttribute('data-value')) <= parseInt(value)) {
-                    s.classList.add('hovered');
-                } else {
-                    s.classList.remove('hovered');
-                }
-            });
-        });
-
-        star.addEventListener('mouseout', () => {
-            stars.forEach(s => s.classList.remove('hovered'));
-        });
-    });
-
-    // 2. LocalStorage to save and load reviews dynamically
-    let localComments = JSON.parse(localStorage.getItem('markFurnitureReviews')) || [
-        { name: "አስቴር ካሳ", rating: 5, text: "በጣም ድንቅ ስራ ነው! ያዘዝነውን የሳሎን ሶፋ በሰዓቱ አምጥተውልናል። ፊኒሺንጉ እጅግ ያምራል።" },
-        { name: "ዳዊት በቀለ", rating: 5, text: "ጥራቱ በጣም አስተማማኝ ነው። ያዘዝኩትን አልጋ መጀመሪያ በ3D እንዳሳዩኝ አድርገው ነው የሰሩት።"
-    ];
-
-    function renderComments() {
-        commentsDisplayList.innerHTML = '';
-        localComments.forEach(c => {
-            let starString = '★'.repeat(c.rating) + '☆'.repeat(5 - c.rating);
-            commentsDisplayList.innerHTML += `
-                <div class="single-comment">
-                    <div class="comment-header">
-                        <span class="comment-name">${c.name}</span>
-                        <span class="comment-stars">${starString}</span>
-                    </div>
+                
                     <p class="comment-text">${c.text}</p>
                 </div>
             `;

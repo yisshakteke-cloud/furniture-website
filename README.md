@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -343,11 +343,6 @@ footer {
     <button class="menu">☰</button>
 </header>
 
-<!-- Free Delivery Banner -->
-<div class="delivery-banner">
-    🚚 የላቀ አገልግሎት — ማንኛውንም እቃ ሲያዙ ያሉበት ድረስ ያለምንም ተጨማሪ ክፍያ በነጻ እናደርሳለን! (Free Delivery Across Addis Ababa)
-</div>
-
 <section class="hero">
     <div class="hero-text">
         <h1>Crafting Luxury Spaces For Elite Living</h1>
@@ -355,7 +350,10 @@ footer {
         <a href="#contact" class="btn">ትዕዛዝ ለመስጠት / Order Now</a>
     </div>
 </section>
-
+<!-- Free Delivery Banner -->
+<div class="delivery-banner">
+    🚚 የላቀ አገልግሎት — ማንኛውንም እቃ ሲያዙ ያሉበት ድረስ ያለምንም ተጨማሪ ክፍያ በነጻ እናደርሳለን! (Free Delivery Across Addis Ababa)
+</div>
 <!-- Process Section -->
 <section id="process" class="process-section">
     <h2>የክብር ደንበኞቻችን የትዕዛዝ ሂደት</h2>

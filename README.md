@@ -725,7 +725,7 @@ footer {
     <div class="process-grid">
         <div class="process-card">
             <div class="step-number">1</div>
-            <h3>디ዛይን ማወቅ</h3>
+            <h3>ዲዛይን ማወቅ</h3>
             <div class="en-sub">Bespoke Design consultation</div>
             <p>የመጀመሪያው ደረጃ ከደንበኞቻችን ጋር በመመካከር በትክክል የሚፈልጉትን፣ ለቤታቸው የሚመጥነውን የፈርኒቸር ዲዛይንና መለኪያ በጥንቃቄ መለየት ነው።</p>
         </div>
@@ -749,12 +749,6 @@ footer {
         </div>
     </div>
 </section>
-
-            </a>
-        </div>
-    </div>
-</section>
-
 <!-- Collections & Services Section -->
 <section id="collections" class="categories">
     <h2>የቅንጦት ምርቶች እና አገልግሎቶች ማሳያ</h2>

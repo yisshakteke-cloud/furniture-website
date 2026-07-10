@@ -962,6 +962,499 @@ footer {
         });
     });
 </script>
+<!-- ======================================================== -->
+<!-- አዲስ፡ የአስተያየት እና የኮከብ (5-Star Rating) መስጫ ክፍል -->
+<!-- ======================================================== -->
+<section id="user-feedback" class="feedback-section">
+    <div class="feedback-container">
+        <h2>እርስዎም አስተያየትዎን ያጋሩን (Leave a Review)</h2>
+        <p>የእርስዎ አስተያየት ለእኛ ትልቅ ዋጋ አለው። እባክዎ የ5 ኮከብ ደረጃ እና አጭር አስተያየት ይተውልን።</p>
+        
+        <form id="feedbackForm">
+            <!-- Star Rating System -->
+            <div class="rating-stars">
+                <span class="star" data-value="1">★</span>
+                <span class="star" data-value="2">★</span>
+                <span class="star" data-value="3">★</span>
+                <span class="star" data-value="4">★</span>
+                <span class="star" data-value="5">★</span>
+            </div>
+            <!-- Hidden input to store rating value -->
+            <input type="hidden" id="selectedRating" value="0">
+            
+            <!-- Input Fields -->
+            <input type="text" id="reviewerName" placeholder="የእርስዎ ስም (Your Name)" required>
+            <textarea id="reviewerComment" rows="4" placeholder="የእርስዎ አስተያየት (Your Comment...)" required></textarea>
+            
+            <button type="submit" class="submit-feedback-btn">አስተያየት አቅርብ / Submit Review</button>
+        </form>
 
+        <!-- Display Area for Submitted Comments -->
+        <div class="submitted-comments-box">
+            <h3>የደንበኞች የቅርብ ጊዜ አስተያየቶች</h3>
+            <div id="commentsDisplayList">
+                <!-- አዳዲስ አስተያየቶች በጃቫስክሪፕት አማካኝነት እዚህ ውስጥ ይገባሉ -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.feedback-section {
+    padding: 90px 8%;
+    background: #fdfdfd;
+    border-top: 1px solid #eef2ef;
+    text-align: center;
+}
+.feedback-container {
+    max-width: 700px;
+    margin: 0 auto;
+}
+.feedback-container h2 {
+    font-size: 32px;
+    color: #064d32;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+.feedback-container p {
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 15px;
+}
+#feedbackForm {
+    background: white;
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.03);
+    border: 1px solid #eef2ef;
+    margin-bottom: 50px;
+}
+.rating-stars {
+    margin-bottom: 20px;
+}
+.star {
+    font-size: 38px;
+    color: #ccc;
+    cursor: pointer;
+    transition: 0.2s;
+    margin: 0 5px;
+    display: inline-block;
+}
+.star:hover,
+.star.hovered,
+.star.selected {
+    color: #ffc107; /* Gold Color */
+}
+#reviewerName, #reviewerComment {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 15px;
+    border: 1px solid #cccccc;
+    border-radius: 10px;
+    font-size: 15px;
+    outline: none;
+    transition: 0.3s;
+}
+#reviewerName:focus, #reviewerComment:focus {
+    border-color: #064d32;
+    box-shadow: 0 0 8px rgba(6,77,50,0.1);
+}
+.submit-feedback-btn {
+    background: #064d32;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 100%;
+    transition: 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.submit-feedback-btn:hover {
+    background: #0b7a4b;
+}
+
+/* Comments Display Style */
+.submitted-comments-box {
+    text-align: left;
+    margin-top: 20px;
+}
+.submitted-comments-box h3 {
+    color: #064d32;
+    font-size: 20px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #eef2ef;
+    padding-bottom: 8px;
+}
+.single-comment {
+    background: #f4f7f5;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    border-left: 5px solid #0b7a4b;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.01);
+}
+.single-comment .comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.single-comment .comment-name {
+    font-weight: bold;
+    color: #064d32;
+    font-size: 15.5px;
+}
+.single-comment .comment-stars {
+    color: #ffc107;
+    font-size: 16px;
+    letter-spacing: 2px;
+}
+.single-comment .comment-text {
+    font-size: 14.5px;
+    color: #444;
+    line-height: 1.6;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const stars = document.querySelectorAll('.star');
+    const ratingInput = document.getElementById('selectedRating');
+    const feedbackForm = document.getElementById('feedbackForm');
+    const commentsDisplayList = document.getElementById('commentsDisplayList');
+
+    // 1. Star Rating Interactive Logic
+    stars.forEach(star => {
+        star.addEventListener('click', () => {
+            const value = star.getAttribute('data-value');
+            ratingInput.value = value;
+            
+            stars.forEach(s => {
+                if(parseInt(s.getAttribute('data-value')) <= parseInt(value)) {
+                    s.classList.add('selected');
+                } else {
+                    s.classList.remove('selected');
+                }
+            });
+        });
+
+        star.addEventListener('mouseover', () => {
+            const value = star.getAttribute('data-value');
+            stars.forEach(s => {
+                if(parseInt(s.getAttribute('data-value')) <= parseInt(value)) {
+                    s.classList.add('hovered');
+                } else {
+                    s.classList.remove('hovered');
+                }
+            });
+        });
+
+        star.addEventListener('mouseout', () => {
+            stars.forEach(s => s.classList.remove('hovered'));
+        });
+    });
+
+    // 2. LocalStorage to save and load reviews dynamically
+    let localComments = JSON.parse(localStorage.getItem('markFurnitureReviews')) || [
+        { name: "አስቴር ካሳ", rating: 5, text: "በጣም ድንቅ ስራ ነው! ያዘዝነውን የሳሎን ሶፋ በሰዓቱ አምጥተውልናል። ፊኒሺንጉ እጅግ ያምራል።" },
+        { name: "ዳዊት በቀለ", rating: 5, text: "ጥራቱ በጣም አስተማማኝ ነው። ያዘዝኩትን አልጋ መጀመሪያ በ3D እንዳሳዩኝ አድርገው ነው የሰሩት።" }
+    ];
+
+    function renderComments() {
+        commentsDisplayList.innerHTML = '';
+        localComments.forEach(c => {
+            let starString = '★'.repeat(c.rating) + '☆'.repeat(5 - c.rating);
+            commentsDisplayList.innerHTML += `
+                <div class="single-comment">
+                    <div class="comment-header">
+                        <span class="comment-name">${c.name}</span>
+                        <span class="comment-stars">${starString}</span>
+                    </div>
+                    <p class="comment-text">${c.text}</p>
+                </div>
+            `;
+        });
+    }
+
+    // Initial render
+    renderComments();
+
+    // 3. Form Submission Logic
+    feedbackForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('reviewerName').value.trim();
+        const comment = document.getElementById('reviewerComment').value.trim();
+        const rating = parseInt(ratingInput.value);
+
+        if(rating === 0) {
+            alert("እባክዎ መጀመሪያ ከኮከቦቹ ላይ ደረጃ (Rating) ይምረጡ!");
+            return;
+        }
+
+        // Add new review to the top of the array
+        localComments.unshift({ name: name, rating: rating, text: comment });
+        
+        // Save back to local storage
+        localStorage.setItem('markFurnitureReviews', JSON.stringify(localComments));
+        
+        // Re-render list and reset form
+        renderComments();
+        feedbackForm.reset();
+        stars.forEach(s => s.classList.remove('selected'));
+        ratingInput.value = "0";
+    });
+});
+</script>
+<!-- ======================================================== -->
+<!-- አዲስ፡ የአስተያየት እና የኮከብ (5-Star Rating) መስጫ ክፍል -->
+<!-- ======================================================== -->
+<section id="user-feedback" class="feedback-section">
+    <div class="feedback-container">
+        <h2>እርስዎም አስተያየትዎን ያጋሩን (Leave a Review)</h2>
+        <p>የእርስዎ አስተያየት ለእኛ ትልቅ ዋጋ አለው። እባክዎ የ5 ኮከብ ደረጃ እና አጭር አስተያየት ይተውልን።</p>
+        
+        <form id="feedbackForm">
+            <!-- Star Rating System -->
+            <div class="rating-stars">
+                <span class="star" data-value="1">★</span>
+                <span class="star" data-value="2">★</span>
+                <span class="star" data-value="3">★</span>
+                <span class="star" data-value="4">★</span>
+                <span class="star" data-value="5">★</span>
+            </div>
+            <!-- Hidden input to store rating value -->
+            <input type="hidden" id="selectedRating" value="0">
+            
+            <!-- Input Fields -->
+            <input type="text" id="reviewerName" placeholder="የእርስዎ ስም (Your Name)" required>
+            <textarea id="reviewerComment" rows="4" placeholder="የእርስዎ አስተያየት (Your Comment...)" required></textarea>
+            
+            <button type="submit" class="submit-feedback-btn">አስተያየት አቅርብ / Submit Review</button>
+        </form>
+
+        <!-- Display Area for Submitted Comments -->
+        <div class="submitted-comments-box">
+            <h3>የደንበኞች የቅርብ ጊዜ አስተያየቶች</h3>
+            <div id="commentsDisplayList">
+                <!-- አዳዲስ አስተያየቶች በጃቫስክሪፕት አማካኝነት እዚህ ውስጥ ይገባሉ -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.feedback-section {
+    padding: 90px 8%;
+    background: #fdfdfd;
+    border-top: 1px solid #eef2ef;
+    text-align: center;
+}
+.feedback-container {
+    max-width: 700px;
+    margin: 0 auto;
+}
+.feedback-container h2 {
+    font-size: 32px;
+    color: #064d32;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+.feedback-container p {
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 15px;
+}
+#feedbackForm {
+    background: white;
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.03);
+    border: 1px solid #eef2ef;
+    margin-bottom: 50px;
+}
+.rating-stars {
+    margin-bottom: 20px;
+}
+.star {
+    font-size: 38px;
+    color: #ccc;
+    cursor: pointer;
+    transition: 0.2s;
+    margin: 0 5px;
+    display: inline-block;
+}
+.star:hover,
+.star.hovered,
+.star.selected {
+    color: #ffc107; /* Gold Color */
+}
+#reviewerName, #reviewerComment {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 15px;
+    border: 1px solid #cccccc;
+    border-radius: 10px;
+    font-size: 15px;
+    outline: none;
+    transition: 0.3s;
+}
+#reviewerName:focus, #reviewerComment:focus {
+    border-color: #064d32;
+    box-shadow: 0 0 8px rgba(6,77,50,0.1);
+}
+.submit-feedback-btn {
+    background: #064d32;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 100%;
+    transition: 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.submit-feedback-btn:hover {
+    background: #0b7a4b;
+}
+
+/* Comments Display Style */
+.submitted-comments-box {
+    text-align: left;
+    margin-top: 20px;
+}
+.submitted-comments-box h3 {
+    color: #064d32;
+    font-size: 20px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #eef2ef;
+    padding-bottom: 8px;
+}
+.single-comment {
+    background: #f4f7f5;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    border-left: 5px solid #0b7a4b;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.01);
+}
+.single-comment .comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.single-comment .comment-name {
+    font-weight: bold;
+    color: #064d32;
+    font-size: 15.5px;
+}
+.single-comment .comment-stars {
+    color: #ffc107;
+    font-size: 16px;
+    letter-spacing: 2px;
+}
+.single-comment .comment-text {
+    font-size: 14.5px;
+    color: #444;
+    line-height: 1.6;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const stars = document.querySelectorAll('.star');
+    const ratingInput = document.getElementById('selectedRating');
+    const feedbackForm = document.getElementById('feedbackForm');
+    const commentsDisplayList = document.getElementById('commentsDisplayList');
+
+    // 1. Star Rating Interactive Logic
+    stars.forEach(star => {
+        star.addEventListener('click', () => {
+            const value = star.getAttribute('data-value');
+            ratingInput.value = value;
+            
+            stars.forEach(s => {
+                if(parseInt(s.getAttribute('data-value')) <= parseInt(value)) {
+                    s.classList.add('selected');
+                } else {
+                    s.classList.remove('selected');
+                }
+            });
+        });
+
+        star.addEventListener('mouseover', () => {
+            const value = star.getAttribute('data-value');
+            stars.forEach(s => {
+                if(parseInt(s.getAttribute('data-value')) <= parseInt(value)) {
+                    s.classList.add('hovered');
+                } else {
+                    s.classList.remove('hovered');
+                }
+            });
+        });
+
+        star.addEventListener('mouseout', () => {
+            stars.forEach(s => s.classList.remove('hovered'));
+        });
+    });
+
+    // 2. LocalStorage to save and load reviews dynamically
+    let localComments = JSON.parse(localStorage.getItem('markFurnitureReviews')) || [
+        { name: "አስቴር ካሳ", rating: 5, text: "በጣም ድንቅ ስራ ነው! ያዘዝነውን የሳሎን ሶፋ በሰዓቱ አምጥተውልናል። ፊኒሺንጉ እጅግ ያምራል።" },
+        { name: "ዳዊት በቀለ", rating: 5, text: "ጥራቱ በጣም አስተማማኝ ነው። ያዘዝኩትን አልጋ መጀመሪያ በ3D እንዳሳዩኝ አድርገው ነው የሰሩት።" }
+    ];
+
+    function renderComments() {
+        commentsDisplayList.innerHTML = '';
+        localComments.forEach(c => {
+            let starString = '★'.repeat(c.rating) + '☆'.repeat(5 - c.rating);
+            commentsDisplayList.innerHTML += `
+                <div class="single-comment">
+                    <div class="comment-header">
+                        <span class="comment-name">${c.name}</span>
+                        <span class="comment-stars">${starString}</span>
+                    </div>
+                    <p class="comment-text">${c.text}</p>
+                </div>
+            `;
+        });
+    }
+
+    // Initial render
+    renderComments();
+
+    // 3. Form Submission Logic
+    feedbackForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('reviewerName').value.trim();
+        const comment = document.getElementById('reviewerComment').value.trim();
+        const rating = parseInt(ratingInput.value);
+
+        if(rating === 0) {
+            alert("እባክዎ መጀመሪያ ከኮከቦቹ ላይ ደረጃ (Rating) ይምረጡ!");
+            return;
+        }
+
+        // Add new review to the top of the array
+        localComments.unshift({ name: name, rating: rating, text: comment });
+        
+        // Save back to local storage
+        localStorage.setItem('markFurnitureReviews', JSON.stringify(localComments));
+        
+        // Re-render list and reset form
+        renderComments();
+        feedbackForm.reset();
+        stars.forEach(s => s.classList.remove('selected'));
+        ratingInput.value = "0";
+    });
+});
+</script>
 </body>
 </html>

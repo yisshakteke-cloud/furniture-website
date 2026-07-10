@@ -1407,35 +1407,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. LocalStorage to save and load reviews dynamically
     let localComments = JSON.parse(localStorage.getItem('markFurnitureReviews')) || [
-        { name: "አስቴር ካሳ", rating: 5, text: "በጣም ድንቅ ስራ ነው! ያዘዝነውን የሳሎን ሶፋ በሰዓቱ አምጥተውልናል። ፊኒሺንጉ እጅግ ያምራል።" },
-        { name: "ዳዊት በቀለ", rating: 5, text: "ጥራቱ በጣም አስተማማኝ ነው። ያዘዝኩትን አልጋ መጀመሪያ በ3D እንዳሳዩኝ አድርገው ነው የሰሩት።" }
-    ];
-
-    function renderComments() {
-        commentsDisplayList.innerHTML = '';
-        localComments.forEach(c => {
-            let starString = '★'.repeat(c.rating) + '☆'.repeat(5 - c.rating);
-            commentsDisplayList.innerHTML += `
-                <div class="single-comment">
-                    <div class="comment-header">
-                        <span class="comment-name">${c.name}</span>
-                        <span class="comment-stars">${starString}</span>
-                    </div>
-                    <p class="comment-text">${c.text}</p>
-                </div>
-            `;
-        });
-    }
-
-    // Initial render
-    renderComments();
-
-    // 3. Form Submission Logic
-    feedbackForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const name = document.getElementById('reviewerName').value.trim();
-        const comment = document.getElementById('reviewerComment').value.trim();
-        const rating = parseInt(ratingInput.value);
+        
 
 
 </body>
